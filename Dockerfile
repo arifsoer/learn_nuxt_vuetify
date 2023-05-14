@@ -28,6 +28,7 @@ WORKDIR /app
 # copy the output directory to the /app directory from 
 # build stage with proper permissions for user nuxt user
 COPY --chown=nuxtuser:nuxtuser --from=build /app/.output ./
+COPY --chown=nuxtuser:nuxtuser --from=build /app/env ./
 # expose 8080 on container
 EXPOSE 8080
 
@@ -36,4 +37,4 @@ EXPOSE 8080
 ENV HOST=0.0.0.0 PORT=8080 NODE_ENV=production
 # start the app with dumb init to spawn the Node.js runtime process
 # with signal support
-CMD ["source","./env/.env.prod","&&","dumb-init","node","/app/server/index.mjs"]
+CMD ["dumb-init","node","/app/server/index.mjs"]
