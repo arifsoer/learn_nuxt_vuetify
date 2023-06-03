@@ -17,11 +17,16 @@
         </v-card-actions>
       </v-card>
     </v-form>
-    <h1>Image Preview</h1>
-    <v-img
-      width="750"
-      :src="srtStr"
-    ></v-img>
+    <v-sheet class="d-flex">
+      <v-sheet class="pa-1">
+        <h1>Image Preview from server</h1>
+        <v-img width="750" :src="srtStr"></v-img>
+      </v-sheet>
+      <v-sheet class="pa-1">
+        <h1>Image Preview from bucket</h1>
+        <v-img width="750" :src="'http://localhost:3030/api/dev/asset?filePath='+pathStr"></v-img>
+      </v-sheet>
+    </v-sheet>
   </div>
 </template>
 
@@ -29,15 +34,17 @@
 const config = useRuntimeConfig();
 const { apiUrl } = config.public;
 const files = ref([]);
-const srtStr = ref('')
+const srtStr = ref("");
+const pathStr = ref("")
 
 const submit = async () => {
   const file = files.value[0];
   const form = new FormData();
   form.append("file", file, "file.png");
   const url = `${apiUrl}/upload`;
-  const {data} = await useFetch(url, { method: "POST", body: form });
-  console.log(data.value.data)
+  const { data } = await useFetch(url, { method: "POST", body: form });
+  console.log(data.value.data);
   srtStr.value = data.value.data.linkUrl;
+  pathStr.value = data.value.data.path;
 };
 </script>
