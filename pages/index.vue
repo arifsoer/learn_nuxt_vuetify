@@ -19,12 +19,12 @@
     </v-form>
     <v-sheet class="d-flex">
       <v-sheet class="pa-1">
-        <h1>Image Preview from server</h1>
+        <h1>Image Preview from bucket</h1>
         <v-img width="750" :src="srtStr"></v-img>
       </v-sheet>
       <v-sheet class="pa-1">
-        <h1>Image Preview from bucket</h1>
-        <v-img width="750" :src="'http://localhost:3030/api/dev/asset?filePath='+pathStr"></v-img>
+        <h1>Image Preview from server</h1>
+        <v-img width="750" :src="apiUrl+'/asset?filePath='+pathStr"></v-img>
       </v-sheet>
     </v-sheet>
   </div>
